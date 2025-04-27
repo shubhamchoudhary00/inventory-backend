@@ -25,11 +25,11 @@ const addBillController = async (req, res) => {
       for(let item of billData.items){
         const {value}=item.product;
         const {quantity}=item;
-        console.log("qty",quantity)
+        // console.log("qty",quantity)
 
         const productId=new mongoose.Types.ObjectId(value);
         const product=await Product.findOne({_id:productId});
-        console.log(product)
+        // console.log(product)
         if(product){
           product.stock=product.stock-quantity;
           await product.save();
@@ -53,7 +53,7 @@ const addBillController = async (req, res) => {
     }
   };
 const getBillController=async(req,res)=>{
-    console.log("body",req.body)
+    // console.log("body",req.body)
     try{
         const bills=await Bill.find({}).lean();
         return res.status(200).json({success:true,message:"Fetched bills",data:bills})

@@ -3,7 +3,7 @@ const handleError = require("./handleError")
 
 const addCategoryController=async(req,res)=>{
     try{
-        console.log(req.body)
+        // console.log(req.body)
         const {name}=req.body;
         const userId=req.user?._id
 
@@ -29,7 +29,7 @@ const addCategoryController=async(req,res)=>{
 const getCategoryController=async(req,res)=>{
     try{
         const categories=await Category.find({isActive:true}).lean();
-        console.log("category",categories)
+        // console.log("category",categories)
         if(!categories || categories.length===0){
             return res.status(400).json({success:false,message:"No Category found"})
         }

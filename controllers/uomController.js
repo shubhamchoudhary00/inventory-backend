@@ -4,7 +4,7 @@ const handleError = require("./handleError")
 
 const addUomController=async(req,res)=>{
     try{
-        console.log("user",req.user)
+        // console.log("user",req.user)
         const {uom,uom_short}=req.body;
         
         const userId=req.user?._id

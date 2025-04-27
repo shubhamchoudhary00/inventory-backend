@@ -3,7 +3,7 @@ const Product = require("../models/product.model");
 const handleError = require("./handleError")
 
 const addProductController=async(req,res)=>{
-    console.log("body",req.body);
+    // console.log("body",req.body);
     try{
         const userId=req.user?._id
         const {categoryId,subcategoryId,stock,productName,price,unitOfMeasure,hsnSacCode,gstRate}=req.body;

@@ -130,10 +130,10 @@ const getAnalyticsData=async(req,res)=>{
             }
 
             const productId=new mongoose.Types.ObjectId(value);
-            console.log(productId)
+            // console.log(productId)
 
             const product=await Product.findOne({_id:productId}).populate({model:"categories",path:"category"});
-            console.log(product)
+            // console.log(product)
 
             const {category}=product;
             if(category){
