@@ -40,7 +40,7 @@ const registerController=async(req,res)=>{
         });
         await newUser.save();
         const token=jwt.sign({userId:newUser?._id},process.env.JWT_SECRET_KEY);
-        return res.status(200).send({success:true,message:"Logged In" , data:{newUser,token}})
+        return res.status(201).send({success:true,message:"Logged In" , data:{newUser,token}})
 
     }catch(error){
         handleError(error,res)
