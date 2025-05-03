@@ -7,7 +7,7 @@ const addProductController=async(req,res)=>{
     try{
         const userId=req.user?._id
         const {categoryId,subcategoryId,stock,productName,price,unitOfMeasure,hsnSacCode,gstRate}=req.body;
-        if(!categoryId || !stock || !subcategoryId || !productName || !price || !unitOfMeasure || !hsnSacCode || !gstRate ){
+        if( !stock  || !productName || !price || !unitOfMeasure || !hsnSacCode || !gstRate ){
             return res.status(400).json({success:false,message:"Missing required fields"})
         }
         const product=await Product.findOne({productName:productName});
@@ -40,10 +40,9 @@ const addProductController=async(req,res)=>{
 const getProductController = async (req, res) => {
     try {
       // Fetch active products and populate related fields
-      const products = await Product.find({ isActive: true }).populate([
+      const products = await Product.find({ isActive: true }).sort({createdAt:-1}).populate([
         { path: 'unitOfMeasure', model: 'uom' },
-        { path: 'category', model: 'categories' },
-        { path: 'subCategory', model: 'subCategories' }
+       
       ]);
   
       // Transform products to match frontend expectations
@@ -116,7 +115,7 @@ const updateProductController = async (req, res) => {
     }
 
     // Validate required fields (adjust based on your schema)
-    const requiredFields = ["productName", "price", "category", "subCategory", "unitOfMeasure", "hsnSacCode", "gstRate", "stock"];
+    const requiredFields = ["productName", "price",  "unitOfMeasure", "hsnSacCode", "gstRate", "stock"];
     const missingFields = requiredFields.filter((field) => !updatedData[field]);
     if (missingFields.length > 0) {
       return res.status(400).json({

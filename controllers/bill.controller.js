@@ -55,7 +55,7 @@ const addBillController = async (req, res) => {
 const getBillController=async(req,res)=>{
     // console.log("body",req.body)
     try{
-        const bills=await Bill.find({}).lean();
+        const bills=await Bill.find({}).sort({createdAt:-1}).lean();
         return res.status(200).json({success:true,message:"Fetched bills",data:bills})
     }catch(error){
         console.log(error)
