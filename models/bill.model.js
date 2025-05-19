@@ -11,7 +11,8 @@ const productSchema = new mongoose.Schema({
 
 const itemSchema = new mongoose.Schema({
   product: { type: productSchema, required: true },
-  quantity: { type: Number, required: true, min: 1 }
+  quantity: { type: Number, required: true, min: 1 },
+  // price:{type:Number,default:0,min:0}
 });
 
 const summarySchema = new mongoose.Schema({
@@ -26,7 +27,7 @@ const summarySchema = new mongoose.Schema({
 const billSchema = new mongoose.Schema({
   customer: {
     name: { type: String, required: true },
-    contact: { type: String, required: true },
+    contact: { type: String },
     paymentMethod: { type: String, enum: ['card', 'cash', 'upi'], required: true },
     billDate: { type: Date, required: true }
   },

@@ -14,10 +14,28 @@ const addBillController = async (req, res) => {
       if (!billData.customer || !billData.items || !billData.billType || !billData.gstStatus || !billData.summary) {
         return res.status(400).json({ error: 'Missing required fields' });
       }
+      const transformedItems = billData.items.map((item) => {
+        if (!item.product || !item.quantity || item.price == null) {
+          throw new Error('Invalid item data: product, quantity, and price are required');
+        }
+        return {
+          product: {
+            ...item.product,
+            price: item.price // Move price into product
+          },
+          quantity: item.quantity
+        };
+      });
   
-      const invoiceNo=generateInvoiceNumber();
-      // Create new bill
-      const newBill = new Bill({...billData,invoiceNo:invoiceNo});
+      const invoiceNo = generateInvoiceNumber();
+      // Create new bill with transformed items
+      const newBill = new Bill({
+        ...billData,
+        items: transformedItems,
+        invoiceNo
+      });
+
+      // console.log("new buill",{...billData,invoiceNo:invoiceNo})
       
       // Save bill to database
       const savedBill = await newBill.save();
@@ -25,6 +43,7 @@ const addBillController = async (req, res) => {
       for(let item of billData.items){
         const {value}=item.product;
         const {quantity}=item;
+        
         // console.log("qty",quantity)
 
         const productId=new mongoose.Types.ObjectId(value);
