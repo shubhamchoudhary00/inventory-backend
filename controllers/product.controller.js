@@ -6,8 +6,8 @@ const addProductController=async(req,res)=>{
     // console.log("body",req.body);
     try{
         const userId=req.user?._id
-        const {categoryId,subcategoryId,stock,productName,price,unitOfMeasure,hsnSacCode,gstRate}=req.body;
-        if( !stock  || !productName || !price || !unitOfMeasure || !hsnSacCode || !gstRate ){
+        const {categoryId,subcategoryId,stock,productName,unitOfMeasure,hsnSacCode,gstRate}=req.body;
+        if( !stock  || !productName  || !unitOfMeasure || !hsnSacCode || !gstRate ){
             return res.status(400).json({success:false,message:"Missing required fields"})
         }
         const product=await Product.findOne({productName:productName});
@@ -22,7 +22,6 @@ const addProductController=async(req,res)=>{
             stock,
             gstRate,
             hsnSacCode,
-            price,
             unitOfMeasure,
             addedBy:userId
 
@@ -115,7 +114,7 @@ const updateProductController = async (req, res) => {
     }
 
     // Validate required fields (adjust based on your schema)
-    const requiredFields = ["productName", "price",  "unitOfMeasure", "hsnSacCode", "gstRate", "stock"];
+    const requiredFields = ["productName",   "unitOfMeasure", "hsnSacCode", "gstRate", "stock"];
     const missingFields = requiredFields.filter((field) => !updatedData[field]);
     if (missingFields.length > 0) {
       return res.status(400).json({
