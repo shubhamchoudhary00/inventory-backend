@@ -84,12 +84,16 @@ const getProductController = async (req, res) => {
       // console.log(id)
   
       // Delete the product
-      const product = await Product.findByIdAndDelete(id);
+      const product = await Product.findOne({_id:id});
+
   
       // Check if product exists
       if (!product) {
         return res.status(404).json({ success: false, message: "Product not found" });
       }
+
+      product.isActive=false;
+      await product.save();
   
       return res.status(200).json({
         success: true,
