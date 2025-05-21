@@ -71,6 +71,8 @@ const getProductController = async (req, res) => {
 
 
   const deleteProductController = async (req, res) => {
+    // console.log(id)
+
     try {
       const { id } = req.params;
   
@@ -78,6 +80,8 @@ const getProductController = async (req, res) => {
       if (!id || !mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ success: false, message: "Invalid product ID" });
       }
+
+      // console.log(id)
   
       // Delete the product
       const product = await Product.findByIdAndDelete(id);
